@@ -1,0 +1,70 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: demo-cluster
+  namespace: rook-ceph
+spec:
+  releaseName: demo-cluster
+  chart:
+    spec:
+      chart: rook-ceph-cluster
+      sourceRef:
+        kind: HelmRepository
+        name: rook-ceph
+  interval: 50m
+  install:
+    remediation:
+      retries: 3
+  values:
+    clusterName: demo-cluster
+    toolbox:
+      enabled: true
+    monitoring:
+      enabled: false
+    cephClusterSpec:
+      dashboard:
+        enabled: true
+      storage:
+        nodes:
+          - name: demo
+            devices:
+              - name: /dev/disk/by-id/dm-name-pool-osd
+      mon:
+        count: 1
+        allowMultiplePerNode: true
+      mgr:
+        count: 1
+        modules:
+          - name: rook
+            enabled: true
+          - name: rgw
+      resources:
+        mgr:
+          limits:
+            memory: "4Gi"
+          requests:
+            cpu: "10m"
+            memory: "128Mi"
+        mds:
+          limits:
+            memory: "4Gi"
+          requests:
+            cpu: "10m"
+            memory: "128Mi"
+        mon:
+          limits:
+            memory: "4Gi"
+          requests:
+            cpu: "10m"
+            memory: "128Mi"
+        osd:
+          limits:
+            memory: "4Gi"
+          requests:
+            cpu: "10m"
+            memory: "128Mi"
+
+    cephBlockPools: []
+    cephFileSystems: []
+    cephObjectStores: []
