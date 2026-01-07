@@ -12,6 +12,7 @@
     ./hardware-configuration.nix
     ../configuration.nix
     ../k3s.nix
+    ../bios-boot.nix
   ];
 
   networking = {

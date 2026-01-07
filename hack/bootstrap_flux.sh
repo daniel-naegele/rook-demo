@@ -10,3 +10,4 @@ sed -i "s/127.0.0.1/$host/" k3s.yaml
 flux install --kubeconfig k3s.yaml
 kubectl apply -f k8s/flux/repository.yaml --kubeconfig k3s.yaml
 kubectl apply -f k8s/flux/kustomization.yaml --kubeconfig k3s.yaml
+kubectl get po --watch -A --kubeconfig k3s.yaml

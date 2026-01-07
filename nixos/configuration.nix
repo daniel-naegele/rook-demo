@@ -26,11 +26,6 @@
     "net.ipv4.ip_forward" = 1;
   };
 
-  boot.loader.grub = {
-    enable = true;
-    configurationLimit = 20;
-  };
-
   boot.loader = {
     systemd-boot.enable = false;
     efi.canTouchEfiVariables = true;
